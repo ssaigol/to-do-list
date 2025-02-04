@@ -1,0 +1,12 @@
+dialog {
+    height: 3rem;
+    background-color: beige;
+    visibility: visible;
+}
+
+dialog form {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

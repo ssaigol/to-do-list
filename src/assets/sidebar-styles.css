@@ -1,0 +1,36 @@
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+#sidebar #projects {
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar #projects-list-container {
+    flex: 1;
+}
+
+#sidebar #tasks {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar #tasks-list-container {
+    flex: 1;
+}
+
+#sidebar #new-project {
+    display: flex;
+    justify-content: end;
+}
+
+
+/* FOR DEV ONLY */
+#sidebar > * {
+    border: 1px solid black;
+}
