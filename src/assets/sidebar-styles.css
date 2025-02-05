@@ -10,9 +10,25 @@
     flex-direction: column;
 }
 
-#sidebar #projects-list-container {
+#sidebar #projects-list, #sidebar #tasks-list {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
+
+#projects-list > button, #tasks-list > button {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+
+
 
 #sidebar #tasks {
     flex: 1;

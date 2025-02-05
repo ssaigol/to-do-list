@@ -21,6 +21,13 @@ body {
     background-color: #A9D6E5;
 }
 
+#header button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
 #sidebar {
     grid-area: sidebar;
     /* background-color: #A9D6E5; */
@@ -74,14 +81,21 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 50px;
-    grid-auto-rows: 200px;
+    grid-auto-rows: 100px;
     padding: 80px;
 }
 
 .home-page > * {
     border: 1px solid black;
     text-align: center;
-    padding-top: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-card:hover {
+    background-color: grey;
+    cursor: pointer;
 }
 
 .project-page {
@@ -92,20 +106,20 @@ body {
     padding: 80px;
 }
 
-.project-page > * {
-    border: 1px solid black;
-    text-align: center;
-    padding-top: 30%;
-}
-
-
 
 
 .task-card {
     display: flex;
     justify-content: center;
+    border: 1px solid black;
+    padding: 20px;
 }
 
-.task-card > * {
+
+.task-card > div {
     flex: 1;
+}
+
+.task-card > button {
+    align-self: flex-end;
 }
