@@ -1,0 +1,48 @@
+/* MAIN CONTENT STYLESHEET */
+.home-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 50px;
+    grid-auto-rows: 100px;
+    padding: 80px;
+}
+
+.home-page > * {
+    border: 1px solid black;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-card:hover {
+    background-color: grey;
+    cursor: pointer;
+}
+
+.project-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 50px;
+    grid-auto-rows: 200px;
+    padding: 80px;
+}
+
+
+
+.task-card {
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+    padding: 20px;
+    cursor: pointer;
+}
+
+
+.task-card > div {
+    flex: 1;
+}
+
+.task-card > button {
+    align-self: flex-end;
+}

@@ -1,0 +1,20 @@
+/* TODAYS TASKS STYLESHEET */
+#today {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+#todays-tasks {
+    height: 90%;
+    border: 1px solid black; /* for dev */
+    display: flex;
+    flex-direction: column;
+}
+
+#todays-tasks > * {
+    width: 100%;
+    display: flex;
+}

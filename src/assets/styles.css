@@ -1,3 +1,9 @@
+@import url("./dialogs.css");
+@import url("./main-content.css");
+@import url("./sidebar-styles.css");
+@import url("./todays-tasks.css");
+
+
 body {
     box-sizing: border-box;
     height: 100vh;
@@ -17,7 +23,6 @@ body {
 
 #header {
     grid-area: header;
-    /* background-color: #19747E; */
     background-color: #A9D6E5;
 }
 
@@ -30,8 +35,6 @@ body {
 
 #sidebar {
     grid-area: sidebar;
-    /* background-color: #A9D6E5; */
-    /* background-color: #D1E8E2; */
     background-color: #E2E2E2;
 }
 
@@ -50,76 +53,4 @@ body {
 
 #main-container > * {
     border: 1px solid black;
-}
-
-
-
-/* TODAYS TASKS STYLESHEET */
-#today {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-}
-
-#todays-tasks {
-    height: 90%;
-    border: 1px solid black; /* for dev */
-    display: flex;
-    flex-direction: column;
-}
-
-#todays-tasks > * {
-    width: 100%;
-    display: flex;
-}
-
-
-/* MAIN CONTENT STYLESHEET */
-.home-page {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 50px;
-    grid-auto-rows: 100px;
-    padding: 80px;
-}
-
-.home-page > * {
-    border: 1px solid black;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.project-card:hover {
-    background-color: grey;
-    cursor: pointer;
-}
-
-.project-page {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 50px;
-    grid-auto-rows: 200px;
-    padding: 80px;
-}
-
-
-
-.task-card {
-    display: flex;
-    justify-content: center;
-    border: 1px solid black;
-    padding: 20px;
-}
-
-
-.task-card > div {
-    flex: 1;
-}
-
-.task-card > button {
-    align-self: flex-end;
 }

@@ -1,10 +1,10 @@
 import { initDomCache, getCache } from "./dom-cache.js";
-import { formatDistanceToNow, differenceInCalendarDays } from "date-fns";
+import { format, differenceInCalendarDays } from "date-fns";
 import { getProjects, createProject } from "./todo-logic.js";
 
 
 initDomCache();
-const {sidebarProjects, sidebarTasks, header, mainContainer, projectsList, projectCards, newProjectButton, newProjectTitle, newProjectSubmit, dueToday } = getCache();
+const {sidebarProjects, sidebarTasks, header, mainContainer, projectsList, projectCards, newProjectButton, newProjectTitle, newProjectSubmit, dueToday, home, dialog, expandedTask, taskCards, taskTitle, taskProject, taskDueDate, taskDescription, taskPriority, taskNotes, taskChecklist, taskStatus } = getCache();
 const TODAY = new Date();
 
 const renderSidebar = function(projects, currentProject) {
@@ -38,11 +38,10 @@ const renderSidebar = function(projects, currentProject) {
     }
 };
 
-
 const renderHeader = function(currentProject) {
     if (currentProject != "Home") {
         header.textContent = `/${currentProject}`;
-    }
+    } else header.textContent = "";
 };
 
 const renderTasksDueToday = function(projects, today) {
@@ -85,6 +84,8 @@ const renderProjectPage = function(projects, currentProject) {
         if (project.title == currentProject) {
             project.tasks.forEach(task => {
                 const taskCard = document.createElement("div");
+                taskCard.id = task.title;
+                taskCard.classList.add(project.title.replace(/ /g, "-"));
                 const taskTitle = document.createElement("div");
                 const taskDueDate = document.createElement("div");
                 const completeTask = document.createElement("button");
@@ -99,7 +100,8 @@ const renderProjectPage = function(projects, currentProject) {
                 mainContainer.classList.add("project-page");
             });
         };
-    })
+    });
+    eventListeners.expandTaskCard();
 }
 
 const getDueDateText = (dueDate) => {
@@ -114,12 +116,30 @@ const getDueDateText = (dueDate) => {
     return `in ${diff} days`;
 }
 
-
 const renderMain = function(projects, currentProject) {
     if (currentProject == "Home") {
         renderHomePage(projects);
     } else renderProjectPage(projects, currentProject);
     renderHeader(currentProject);
+}
+
+const populateTaskCard = function(project, title, dueDate, description, priority, notes, checklist, status) {
+    taskProject.value = project;
+    taskTitle.value = title;
+    taskDueDate.value = format(dueDate, "yyyy-MM-dd"); 
+    taskDescription.value = description;
+    taskPriority.value = priority;
+    taskNotes.value = notes;
+    checklist.forEach((item) => {
+        // const checklistItem = document.createElement("input");
+        // checklistItem.type = "checkbox";
+        // checklistItem.id = item;
+        const checklistItemLabel = document.createElement("label");
+        checklistItemLabel.setAttribute("for", item);
+        checklistItemLabel.textContent = item;
+        taskChecklist.append(checklistItemLabel);
+    });
+    taskStatus.value = status;
 }
 
 
@@ -149,10 +169,27 @@ const eventListeners = (function() {
             });
         })
     };
-    
-    return { newProject, homeButton, projectButtons };
-})();
 
+    const expandTaskCard = function() {
+        [...taskCards].forEach(card => {
+            card.addEventListener("click", (e) => {
+                const taskID = e.target.id;
+                getProjects().forEach(project => {
+                    if (e.target.classList.contains(project.title.replace(/ /g, "-"))) {
+                        project.tasks.forEach(task => {
+                            if (task.title == taskID) {
+                                populateTaskCard(project.title, task.title, task.dueDate, task.description, task.priority, task.notes, task.checklist, task.status);
+                                expandedTask.showModal();
+                            }
+                        })
+                    }
+                })
+            })
+        })
+    }
+    
+    return { newProject, homeButton, projectButtons, expandTaskCard };
+})();
 
 
 const render = (projects, currentProject) => {

@@ -26,10 +26,6 @@
     cursor: pointer;
 }
 
-
-
-
-
 #sidebar #tasks {
     flex: 1;
     display: flex;

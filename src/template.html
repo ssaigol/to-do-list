@@ -45,5 +45,34 @@
         </form>
     </dialog>
 
+
+    <dialog id="expanded-task">
+
+        <form method="dialog">
+            <div>
+                <button id="close">X</button>
+                <label>Project: <input type="text" id="task-project" readonly></label>
+                <label>Task: <input type="text" id="task-title" readonly></label>
+                <label>Due: <input type="date" id="task-due-date" readonly></label>
+                <label>Description: <input type="text" id="task-description" readonly></label>
+                <label for="task-priority">Priority: 
+                    <select id="task-priority" disabled>
+                        <option value="">None</option>
+                        <option value="1">!</option>
+                        <option value="2">!!</option>
+                        <option value="3">!!!</option>
+                    </select>
+                </label>
+                <label>Notes: <textarea id="task-notes" disabled></textarea></label>
+                <fieldset id="task-checklist" readonly>
+                    <legend>Checklist</legend>
+                </fieldset>
+                <label>Status: <input type="text" id="task-status" readonly></label>
+                <button id="edit">Edit</button>
+            </div>
+        </form>
+
+    </dialog>
+
 </body>
 </html>
