@@ -167,8 +167,6 @@ const projects = [
     }
 ];
 
-// let currentProject = "Home";
-
 
 function createProject(title) {
     const newProject = new Project(title);
@@ -176,8 +174,12 @@ function createProject(title) {
     render(projects, title);
 };
 
-function createTask(projectTitle, title, dueDate) {
-    const newTask = new Task(title, dueDate);
+function createTask(projectTitle, title, dueDate, description, priority, notes) {
+    const newTask = new Task(title, new Date(dueDate + "T00:00:00"));
+    newTask.description = description;
+    newTask.priority = priority;
+    newTask.notes = notes;
+    newTask.checklist = [];
     projects.forEach(project => {
         if (project.title == projectTitle) {
             project.tasks.push(newTask);
@@ -186,6 +188,26 @@ function createTask(projectTitle, title, dueDate) {
     render(projects, projectTitle);
 };
 
+function editTask(projectTitle, taskTitle, dueDate, description, priority, notes) {
+    const taskToEdit = projects.find(project => project.title == projectTitle).tasks.find(task => task.title == taskTitle);
+    taskToEdit.dueDate = dueDate;
+    taskToEdit.description = description;
+    taskToEdit.priority = priority;
+    taskToEdit.notes = notes;
+}
+
+function addChecklistSubtask(subtask, projectTitle, taskTitle) {
+    const taskToEdit = projects.find(project => project.title == projectTitle).tasks.find(task => task.title == taskTitle);
+    taskToEdit.checklist.push(subtask);
+    // render(projects, projectTitle);
+}
+
+
+function taskCompleted(projectTitle, taskTitle) {
+    projects.find(project => project.title == projectTitle).tasks.find(task => task.title == taskTitle).status = "Completed";
+    render(projects, projectTitle);
+}
+
 function getProjects() {
     const projectsArr = projects;
     return projectsArr;
@@ -193,4 +215,4 @@ function getProjects() {
 
 
 
-export { createProject, createTask, getProjects };
+export { createProject, createTask, getProjects, editTask, taskCompleted, addChecklistSubtask };
