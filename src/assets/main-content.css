@@ -15,9 +15,21 @@
     align-items: center;
 }
 
+.project-card {
+    background-color: beige;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: none;
+    font-size: 1.1rem;
+}
+
 .project-card:hover {
-    background-color: grey;
+    background-color: rgb(225, 225, 188);
     cursor: pointer;
+    transform: scale(1.1);
+    border: 2px solid lightgrey;
 }
 
 .project-page {
@@ -34,8 +46,19 @@
     display: flex;
     justify-content: center;
     border: 1px solid black;
-    padding: 20px;
+    padding: 30px;
+    background-color: beige;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: none;
+}
+
+.task-card:hover {
+    background-color: rgb(225, 225, 188);
     cursor: pointer;
+    transform: scale(1.05);
 }
 
 
@@ -46,3 +69,4 @@
 .task-card > button {
     align-self: flex-end;
 }
+

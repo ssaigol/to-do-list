@@ -52,10 +52,30 @@ dialog form {
     width: 2rem;
 }
 
-#edit {
-    width: 3rem;
+#task-buttons {
+    display: flex;
+    align-self: flex-end;
+    gap: 5px;
+}
+
+#task-edit {
+    width: 4rem;
+    align-self: flex-end;
+    /* display: none; */
+}
+
+#task-submit {
+    width: 4rem;
+    /* display: none; */
+
+}
+
+#task-subtask {
+    width: 6rem;
     align-self: flex-end;
 }
+
+
 
 #task-description {
     width: 100%;

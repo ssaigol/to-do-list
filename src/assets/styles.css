@@ -9,6 +9,7 @@ body {
     height: 100vh;
     margin: 0;
     padding: 0;
+    font-family: arial;
 }
 
 #page-container {
@@ -24,13 +25,27 @@ body {
 #header {
     grid-area: header;
     background-color: #A9D6E5;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
 }
 
 #header button {
     background: none;
     border: none;
     padding: 0;
+    font-size: 1.5rem;
+    margin-right: 3px;
+}
+
+#header button:hover {
+    color: #069;
+    text-decoration: underline;
     cursor: pointer;
+}
+
+#current-project {
+    font-size: 1.5rem;
 }
 
 #sidebar {

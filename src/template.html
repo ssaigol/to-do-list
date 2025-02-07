@@ -8,7 +8,7 @@
 <body>
     <div id="page-container">
         <div id="header">
-            <button id="home">Home</button><span id="current-project"></span>
+            <button id="home">Home</button><div id="current-project"></div>
         </div>
         <div id="sidebar">
             <div id="projects">
@@ -20,14 +20,17 @@
                 </div>
             </div>
             <div id="tasks">
-                <div>Tasks</div>
+                <div id="tasks-header">Tasks</div>
                 <div id="tasks-list">
 
                         <!-- Tasks list for current selected project -->
 
                 </div>
             </div>
-            <div id="new-project"><button id="new-project-button">New Project</button></div>
+            <div id="new-project">
+                <button id="new-project-button">New Project</button>
+                <button id="new-task-button">New Task</button>
+            </div>
         </div>
         <div id="main-container">
             <div id="main"></div>
@@ -68,11 +71,23 @@
                     <legend>Checklist</legend>
                 </fieldset>
                 <label>Status: <input type="text" id="task-status" readonly></label>
-                <button id="edit">Edit</button>
+                <div id="task-buttons">
+                    <button id="task-edit">Edit</button>
+                    <button id="task-subtask">Add Subtask</button>
+                    <button id="task-submit">Submit</button>
+                </div>
             </div>
         </form>
+        <dialog id="subtask">
+            <form method="dialog">
+                <label>Subtask: <input type="text" id="new-subtask"></label>
+                <button id="submit-subtask">Submit</button>
+            </form>
+        </dialog>
 
     </dialog>
+
+
 
 </body>
 </html>

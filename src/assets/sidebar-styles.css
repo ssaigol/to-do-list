@@ -8,6 +8,14 @@
     height: 50%;
     display: flex;
     flex-direction: column;
+    padding-top: 15px;
+    gap: 15px;
+    border-bottom: 1px solid black;
+}
+
+#projects div:first-child, #tasks div:first-child {
+    padding-left: 10px;
+    font-weight: 700;
 }
 
 #sidebar #projects-list, #sidebar #tasks-list {
@@ -21,28 +29,56 @@
     background: none;
     border: none;
     padding: 0;
+    color: black;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+#projects-list > button:hover, #tasks-list > button:hover {
     color: #069;
     text-decoration: underline;
-    cursor: pointer;
+    font-size: 1rem;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
 }
+
 
 #sidebar #tasks {
     flex: 1;
     display: flex;
     flex-direction: column;
+    padding-top: 20px;
+    gap: 20px;
 }
 
-#sidebar #tasks-list-container {
-    flex: 1;
-}
 
 #sidebar #new-project {
     display: flex;
     justify-content: end;
 }
 
+#new-project button {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 10px 15px;
+    border: none;
+    background-color: lightblue;
+}
+
+#new-project button:hover {
+    background-color: rgb(125, 202, 227);
+    border: solid white 3px;
+}
+
+#new-task-button {
+    display: none;
+}
+
 
 /* FOR DEV ONLY */
-#sidebar > * {
+/* #sidebar > * {
     border: 1px solid black;
-}
+} */

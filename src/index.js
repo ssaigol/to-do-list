@@ -3,7 +3,6 @@ import { init } from "./modules/render";
 import { getProjects } from "./modules/todo-logic";
 
 
-
 const projects = getProjects();
 
 
