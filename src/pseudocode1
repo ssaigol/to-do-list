@@ -1,0 +1,258 @@
+//MODULES\\
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//Task Class (export Task)
+    //Constructor
+        //Required: Title & Due Date
+        //Optional (blank if not provided): Description, Priority, Notes
+        //Status initialized to Incomplete
+    //Get & Set checklist subtasks array (array of subtask objects, each one has a string and a status property)
+        //Set requires a subtask string and initiates status to Incomplete
+    //Get & Set for each property
+    //Methods:
+        //changeStatus() => if status is "Incomplete", change to "Completed", if status is "Completed", change to "Incomplete"
+        //changeSubtaskStatus() => if status is "Incomplete", change to "Completed", if status is "Completed", change to "Incomplete"
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//Project Class (export Project)
+    //Constructor
+        //Required: Title
+        //Initialize empty tasks array
+    //Get & Set Title
+    //Methods:
+        //Get specific task from task array
+        //Delete specific task from task array
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//Dom Cache (export initalizeDom & getCache)
+    //Initialize Dom function ==> runs once at top of render module to make dom elements accessible
+    //Dom cache => contains cache of all dom elements that need to be manipulated (ie. content changed), or watched (ie. event listener or user input)
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//To do Logic (export createProject, createTask, editProject, editTask, getProjects, getTaskInfo) 
+    //Import: Project Class from project.js, Task Class from task.js
+    //Global variables:
+        //projects array => working directory of all projects and tasks within them
+
+    //Create Project function => creates new Project (imp from Projects module) instance, and appends to projects array (global variable)
+        //arguments: Title (required for constructor)
+
+    //Create Task function => creates new Task (imp from Task module) instance, and appends to appropriate project instance in projects array
+        //arguments: 
+            //Title (req for constructor)
+            //Due date (req for constructor), 
+            //Project (req to append new Task instance to appropriate Project instance)
+            //description (optional, default value is blank)
+            //priority (optional, default value is blank)
+            //notes (optional, default value is blank)
+
+    //edit Project function => Uses Project instance set title method to change Project title
+
+    //editTask function ==> IIFE that returns object with list of edit functions
+        //edit title (project, old title, new title) => uses Task title setter method to change Task title
+        //edit due date (project, task, due date) => uses Task due date setter method to change Task due date
+        //edit description (project, task, description) => uses Task description setter method to change Task due date
+        //edit priority (project, task, priority) => uses Task priority setter method to change Task priority
+        //edit notes (project, task, notes) => uses Task notes setter method to change Task notes
+        //change status (project, task) => uses Task changeStatus() method to change status in either direction
+        //add subtask (project, task, subtask) => uses Task checklist setter method to append subtask to Task checklist array
+        //change subtask status (project, task, subtask) => usees changeSubtaskStatus() method to change status in either direction
+        //edit (project, task, newTitle, newDate, newDescription, newPriority, newNotes) 
+            //editTitle(project, task, newTitle);
+            //editDueDate(project, task, newDate);
+            //editDescription(project, task, newDescription);
+            //editPriority(project, task, newPriority);
+            //editNotes(project, task, newNotes)
+        //return { edit, changeStatus, addSubtask, changeSubtaskStatus}
+
+    //getProjects function => returns copy of project array to use for rendering content
+
+    //getTaskInfo function => returns object containing all info of a specific task
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//Display (export init and render) 
+    //Import: initializeDom, getCache from dom-cache.js && createProject, createTask, editProject, editTask, getProjects from todo-logic.js
+
+    //Global variables:
+        //current project => feed into render functions to render appropriate content based on current project, null if on Home page
+        //current task => feed into render functions to render appropriate content based on current task, null if not on expanded task card
+        //dom cache => destructure getCache() into object of variables
+        //const TODAY = new Date()
+
+    //**INITIALIZE DOM CACHE USING initializeDom()**
+
+    //render functions (IIFE):
+        //renderSidebar(projects)
+            //clear first
+            //list of project titles in sidebar
+            //if current project != home: 
+                //list of project tasks in sidebar
+                //make add task button visible
+        //renderHeader()
+        //renderTodaysTasks(projects)
+            //clear first
+            //list of tasks with due date === TODAY
+                //class = task project
+                //id = task title
+            //include title & due date (maybe description also)
+            //include complete button
+        //renderHomePage(projects)
+            //create project card for each project based on current project === home
+            //add button for changing project name
+        //renderProjectPage(projects)
+            //create task car for each task based on current project != "home"
+            //include title, due date (use helper function to show how many days until due)
+            //include complete button
+        //renderMain(projects)
+            //clear first
+            //if current project = home, renderHomePage(projects) 
+            //else if current project = some project, renderProjectPage(projects)
+        //renderTaskCard()
+            //if current task = null:
+                //populate task card with empty fields & current project
+            //else if current task != null:
+                //call getTaskInfo() and use return value to populate task card
+                //task card read only
+                //task card dialog showModal()
+        //render()
+            //const projects = getProjects()
+            //renderSidebar(projects)
+            //renderHeader()
+            //renderTodaysTasks(projects)
+            //renderMain(projects)
+            //renderTaskCard()
+            //events.addListeners
+        //return { render }
+    
+    //events functions (IIFE):
+
+        //init function:
+
+            //header home button:
+                //setCurrentLocation("home", null)
+                //render()
+
+            //new project button:
+                //open new project dialog
+            //new project dialog submit button
+                //createProject(newTitle) *imported function from todo-logic.js*
+                //setCurrentLocation(newTitle)
+                //render()
+            
+            //change project name dialog submit button
+                //editProject(input.value)
+                //render()
+
+            //new task button:
+                //populateTaskCard() empty (make sure current task equal null at this point)
+                //task card editable()
+                //task card dialog showModal()
+            //new task dialog submit
+                //if current task === null => createTask() (imported from todo-logic.js)
+                //else if current task === some task => editTask.edit() (imported from todo-logic.js)
+                //setCurrentlocation(currentproject(ie. stays the same), null(ie. doesn't open a task card immeditely after closing))
+                //render()
+
+            //add subtask button:
+                //open subtask dialog
+            //subtask dialog submit
+                //editTask.addSubtask(input.value)
+                //setCurrentlocation(project, task (ie. want the same task card from before to be open, but with new subtask added))
+                //render()
+
+        //addListeners
+            //sidebar
+                //add listeners to sidebar projects list after rendering
+                    //setCurrentLocation(target.textcontent, null)
+                    //render()
+                //add listeners to sidebar tasks list after rendering
+                    //setCurrentLocation(current project, target.textcontent)
+                    //render
+            //homepage
+                //add listeners to home page project cards
+                    //setCurrentLocation(target.textcontent, null)
+                    //render()
+                //add listeners to change name buttons on project cards
+                    //change project name dilog showModal()
+            //project page
+                //add listeners to project page task cards
+                    //setCurrentLocation(currentProject, target.textcontent)
+                //add listeners to task card complete buttons
+                    //editTask.changeStatus()
+                    //render()
+            //todays tasks
+                //add listeners to todays tasks list to expand task card
+                    //setCurrentLocation(target.class, target.id)
+                    //render()
+                //add listeners to complete buttons to change task complete status
+                    //editTask.changeStatus()
+                    //render()
+
+        //return { init, addListeners }
+            
+
+
+
+
+
+
+    //Helper Functions:
+        //setCurrentLocation(project, task = null)
+            //current project = project
+            //current task = task
+
+        //Task card editble
+
+        //Task card read only
+
+        //howManyDays() => calculate how many days between TODAY and due date
+
+
+
+
+
+//Dialogs needed in HTML:
+    //New Project dialog
+    //Expanded task card dialog
+    //Add subtask Dialog
+    //change project title dialog
+
+
+
+
+
+        class Task {
+            constructor(title, duedate, description = '', priority = '', notes = '') {
+                this.title = title;
+                this.duedate = duedate;
+                this.description = description;
+                this.priority = priority;
+                this.notes = notes;
+            }
+        }
+        
+        function createTask(title, duedate, description = '', priority = '', notes = '') {
+            // Only pass non-empty values to the Task constructor
+            return new Task(
+                title,
+                duedate,
+                description,
+                priority,
+                notes
+            );
+        }
+        
