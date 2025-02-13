@@ -5,6 +5,17 @@
     flex-direction: column;
     justify-content: center;
     gap: 10px;
+
+}
+
+#todays-tasks-wrapper {
+    height: 90%;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+
+    overflow: hidden;
 }
 
 #todays-tasks {
@@ -12,12 +23,9 @@
     display: flex;
     flex-direction: column;
     background-color: #e0eeea;;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
     padding: 30px;
 
+    overflow-y: auto;
 }
 
 #todays-tasks > * {
@@ -27,6 +35,8 @@
     border-bottom: solid 2px rgb(181, 180, 180);
     padding: 10px 0px 0px;
 }
+
+
 
 .today:hover {
     color: #069;

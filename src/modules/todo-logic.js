@@ -1,218 +1,158 @@
+import {  } from "date-fns/locale";
 import Project from "./project.js";
 import Task from "./task.js";
-import { render } from "./render.js";
 
-// const projects = [];
+const projects = [];
+projects.push(new Project("Misc"));
+populateStorage();
 
-const projects = [
-    {
-        title: "Work",
-        tasks: [
-            {
-                title: "Finish report",
-                dueDate: new Date(2025, 1, 5),
-                description: "Description for Finish report",
-                priority: 2,
-                notes: "Notes for Finish report",
-                checklist: ["Subtask 1 for Finish report", "Subtask 2 for Finish report"],
-                status: "Incomplete"
-            },
-            {
-                title: "Attend meeting",
-                dueDate: new Date(2025, 1, 6),
-                description: "Description for Attend meeting",
-                priority: 1,
-                notes: "Notes for Attend meeting",
-                checklist: ["Subtask 1 for Attend meeting", "Subtask 2 for Attend meeting"],
-                status: "Incomplete"
-            },
-            {
-                title: "Review code",
-                dueDate: new Date(2025, 1, 7),
-                description: "Description for Review code",
-                priority: 3,
-                notes: "Notes for Review code",
-                checklist: ["Subtask 1 for Review code", "Subtask 2 for Review code"],
-                status: "Incomplete"
-            }
-        ]
-    },
-    {
-        title: "Personal",
-        tasks: [
-            {
-                title: "Call mom",
-                dueDate: new Date(2025, 1, 5),
-                description: "Description for Call mom",
-                priority: 1,
-                notes: "Notes for Call mom",
-                checklist: ["Subtask 1 for Call mom", "Subtask 2 for Call mom"],
-                status: "Incomplete"
-            },
-            {
-                title: "Buy groceries",
-                dueDate: new Date(2025, 1, 6),
-                description: "Description for Buy groceries",
-                priority: 2,
-                notes: "Notes for Buy groceries",
-                checklist: ["Subtask 1 for Buy groceries", "Subtask 2 for Buy groceries"],
-                status: "Incomplete"
-            }
-        ]
-    },
-    {
-        title: "Home Improvement",
-        tasks: [
-            {
-                title: "Paint living room",
-                dueDate: new Date(2025, 1, 10),
-                description: "Description for Paint living room",
-                priority: 3,
-                notes: "Notes for Paint living room",
-                checklist: ["Subtask 1 for Paint living room", "Subtask 2 for Paint living room"],
-                status: "Incomplete"
-            },
-            {
-                title: "Fix the leaky faucet",
-                dueDate: new Date(2025, 1, 12),
-                description: "Description for Fix the leaky faucet",
-                priority: 2,
-                notes: "Notes for Fix the leaky faucet",
-                checklist: ["Subtask 1 for Fix the leaky faucet", "Subtask 2 for Fix the leaky faucet"],
-                status: "Incomplete"
-            },
-            {
-                title: "Install new lights",
-                dueDate: new Date(2025, 1, 15),
-                description: "Description for Install new lights",
-                priority: 1,
-                notes: "Notes for Install new lights",
-                checklist: ["Subtask 1 for Install new lights", "Subtask 2 for Install new lights"],
-                status: "Incomplete"
-            }
-        ]
-    },
-    {
-        title: "Shopping List",
-        tasks: [
-            {
-                title: "Buy milk",
-                dueDate: new Date(2025, 1, 5),
-                description: "Description for Buy milk",
-                priority: 1,
-                notes: "Notes for Buy milk",
-                checklist: ["Subtask 1 for Buy milk", "Subtask 2 for Buy milk"],
-                status: "Incomplete"
-            },
-            {
-                title: "Buy eggs",
-                dueDate: new Date(2025, 1, 6),
-                description: "Description for Buy eggs",
-                priority: 2,
-                notes: "Notes for Buy eggs",
-                checklist: ["Subtask 1 for Buy eggs", "Subtask 2 for Buy eggs"],
-                status: "Incomplete"
-            },
-            {
-                title: "Buy bread",
-                dueDate: new Date(2025, 1, 7),
-                description: "Description for Buy bread",
-                priority: 3,
-                notes: "Notes for Buy bread",
-                checklist: ["Subtask 1 for Buy bread", "Subtask 2 for Buy bread"],
-                status: "Incomplete"
-            },
-            {
-                title: "Buy fruits",
-                dueDate: new Date(2025, 1, 8),
-                description: "Description for Buy fruits",
-                priority: 1,
-                notes: "Notes for Buy fruits",
-                checklist: ["Subtask 1 for Buy fruits", "Subtask 2 for Buy fruits"],
-                status: "Incomplete"
-            }
-        ]
-    },
-    {
-        title: "Health & Fitness",
-        tasks: [
-            {
-                title: "Morning workout",
-                dueDate: new Date(2025, 1, 5),
-                description: "Description for Morning workout",
-                priority: 2,
-                notes: "Notes for Morning workout",
-                checklist: ["Subtask 1 for Morning workout", "Subtask 2 for Morning workout"],
-                status: "Incomplete"
-            },
-            {
-                title: "Yoga session",
-                dueDate: new Date(2025, 1, 6),
-                description: "Description for Yoga session",
-                priority: 3,
-                notes: "Notes for Yoga session",
-                checklist: ["Subtask 1 for Yoga session", "Subtask 2 for Yoga session"],
-                status: "Incomplete"
-            },
-            {
-                title: "Healthy breakfast",
-                dueDate: new Date(2025, 1, 7),
-                description: "Description for Healthy breakfast",
-                priority: 1,
-                notes: "Notes for Healthy breakfast",
-                checklist: ["Subtask 1 for Healthy breakfast", "Subtask 2 for Healthy breakfast"],
-                status: "Incomplete"
-            }
-        ]
-    }
-];
-
-
+//Manipulate the actual projects array
 function createProject(title) {
-    const newProject = new Project(title);
-    projects.push(newProject);
-    render(projects, title);
+    projects.push(new Project(title));
+    populateStorage();
 };
 
-function createTask(projectTitle, title, dueDate, description, priority, notes) {
-    const newTask = new Task(title, new Date(dueDate + "T00:00:00"));
-    newTask.description = description;
-    newTask.priority = priority;
-    newTask.notes = notes;
-    newTask.checklist = [];
+function createTask(projectID, title, dueDate, description, priority, notes) {
+    const project = projects.find(project => project.id === projectID);
+    const projectTitle = project.title;
+    if (!project) return;
+    const newTask = new Task(title, projectTitle, projectID, dueDate, description, priority, notes);
+    project.addTask(newTask);
+    populateStorage();
+}
+
+function changeProjectTitle(projectID, newTitle) {
+    projects.find(project => project.id === projectID).title = newTitle;
+    populateStorage();
+}
+
+const editTask = (function() {
+
+
+    function edit(taskID, newTitle, newDueDate, newDescription, newPriority, newNotes) {
+        const taskToEdit = findTask(taskID);
+        if(!taskToEdit) return;
+        taskToEdit.title = newTitle;
+        taskToEdit.dueDate = newDueDate;
+        taskToEdit.description = newDescription;
+        taskToEdit.notes = newNotes;
+        taskToEdit.priority = newPriority;
+        populateStorage();
+    };
+
+    function changeTaskStatus(taskID) {
+        findTask(taskID)?.changeStatus();
+        populateStorage();
+    };
+
+    function addTaskSubtask(taskID, subtask) {
+        const task = findTask(taskID);
+        if (task) {
+            task.addSubtask(subtask);
+            populateStorage();
+        }
+
+    };
+
+    function changeTaskSubtaskStatus(taskID, subtask) {
+        findTask(taskID)?.changeSubtaskStatus(subtask);
+        populateStorage();
+    };
+
+    
+    return { edit, changeTaskStatus, addTaskSubtask, changeTaskSubtaskStatus }
+})();
+
+function findTask(taskID) {
     projects.forEach(project => {
-        if (project.title == projectTitle) {
-            project.tasks.push(newTask);
-        };
-    });
-    render(projects, projectTitle);
+        project.tasks.forEach(task => {
+            if (task.id === taskID) {
+                return task;
+            }
+        })
+    })
+
+    // const project = projects.find(project => project.id === projectID);
+    // return project ? project.getTask(taskID) : null;
 };
 
-function editTask(projectTitle, taskTitle, dueDate, description, priority, notes) {
-    const taskToEdit = projects.find(project => project.title == projectTitle).tasks.find(task => task.title == taskTitle);
-    taskToEdit.dueDate = dueDate;
-    taskToEdit.description = description;
-    taskToEdit.priority = priority;
-    taskToEdit.notes = notes;
-}
-
-function addChecklistSubtask(subtask, projectTitle, taskTitle) {
-    const taskToEdit = projects.find(project => project.title == projectTitle).tasks.find(task => task.title == taskTitle);
-    taskToEdit.checklist.push(subtask);
-    // render(projects, projectTitle);
-}
-
-
-function taskCompleted(projectTitle, taskTitle) {
-    projects.find(project => project.title == projectTitle).tasks.find(task => task.title == taskTitle).status = "Completed";
-    render(projects, projectTitle);
-}
-
+//Retrieve stored projects array for dom manipulation
 function getProjects() {
-    const projectsArr = projects;
+    const projectsArr = getStoredProjects();
     return projectsArr;
 }
 
+function getProjectTitle(projectID) {
+    const projects = getStoredProjects();
+    const project = projects.find(project => project.id === projectID);
+    return project ? project.title : "Unknown Project";
+}
+
+function getTasks(projectID) {
+    const projects = getStoredProjects();
+    const projectTasks = projects.find(project => project.id === projectID);
+    return projectTasks ? projectTasks.tasks : [];
+}
+
+function getTaskInfo(taskID) {
+    const task = getAllTasks().find(task => task.id === taskID);
+    return { 
+        project: task.project,
+        title: task.title, 
+        dueDate: task.dueDate, 
+        description: task.description,
+        priority: task.priority,
+        notes: task.notes,
+        checklist: task.checklist,
+        status: task.status
+    };
+}
+
+function getAllTasks() {
+    const projects = getStoredProjects();
+    const tasks = [];
+    if (projects) {
+        projects.forEach(project => {
+            (project.tasks || []).forEach(task => {
+                tasks.push(task);
+            });
+    });
+    return tasks;
+    };
+}
 
 
-export { createProject, createTask, getProjects, editTask, taskCompleted, addChecklistSubtask };
+
+function populateStorage() {
+    localStorage.setItem("projects", JSON.stringify(projects));
+}
+
+function rehydrateStoredProjects(storedProjects) {
+    return storedProjects.map(projData => {
+        const projectInstance = new Project(projData._title);
+        projectInstance._id = projData._id;
+        projectInstance._tasks = (projData._tasks || []).map(taskData => {
+            const taskInstance = new Task(taskData._title, projData._title, projData._id, taskData._dueDate, taskData._description, taskData._priority, taskData._notes);
+            taskInstance._id = taskData._id;
+            taskInstance._checklist = taskData._checklist;
+            taskInstance.status = taskData.status;
+            return taskInstance
+        });
+        return projectInstance;
+    });
+}
+
+function getStoredProjects() {
+    const storedProjects = localStorage.getItem("projects");
+    if (storedProjects) {
+        const parsed = JSON.parse(storedProjects);
+        return rehydrateStoredProjects(parsed);
+    }
+    return [];
+}
+
+export { createProject, createTask, changeProjectTitle, editTask, getProjects, getProjectTitle, getTasks, getTaskInfo, getAllTasks };
+
+
+//Write delete task function (using Project class delete class method)
+//Write delete project function (iterate through projects array) ==> add warning that will delete all tasks within

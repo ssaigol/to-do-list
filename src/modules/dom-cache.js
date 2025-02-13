@@ -1,23 +1,41 @@
 let cache = {};
 
 function initDomCache() {
+    //Header elements
     cache.header = document.getElementById("current-project"); 
-    cache.home = document.getElementById("home");
-    cache.sidebarProjects = document.getElementById("projects-list");
-    cache.sidebarTasks = document.getElementById("tasks-list");
+    cache.homeButton = document.getElementById("home");
+
+    //Sidebar elements
+    cache.sidebarProjectsList = document.getElementById("projects-list");
+    cache.sidebarTasksList = document.getElementById("tasks-list");
+    cache.sidebarTasksHeader = document.getElementById("tasks-header");
     cache.newProjectButton = document.getElementById("new-project-button");
     cache.newTaskButton = document.getElementById("new-task-button");
-    cache.dialog = document.getElementById("dialog");
-    cache.newProjectTitle = document.getElementById("new-project-title");
-    cache.newProjectSubmit = document.getElementById("submit");
-    cache.projectsList = document.getElementsByClassName("project");
-    cache.projectCards = document.getElementsByClassName("project-card");
+    cache.sidebarProjects = document.getElementsByClassName("project"); //HTML Collection
+    cache.sidebarTasks = document.getElementsByClassName("task");   //HTML Collection
+
+    //Today's Tasks elements
+    cache.todaysTasksList = document.getElementById("todays-tasks");
+    cache.todaysTasks = document.getElementsByClassName("today"); //HTML Collection ==> can be combined with sidebar tasks?
+
+    //Main container elements
     cache.mainContainer = document.getElementById("main"); 
-    cache.dueToday = document.getElementById("todays-tasks");
-    cache.sidebarTasksHeader = document.getElementById("tasks-header");
-    cache.todaysTasks = document.getElementsByClassName("today");
-    cache.expandedTask = document.getElementById("expanded-task");
-    cache.taskCards = document.getElementsByClassName("task-card");
+    cache.projectCards = document.getElementsByClassName("project-card"); //HTML Collection
+    cache.changeNameButtons = document.getElementsByClassName("change-project-name"); //HTML Collection
+    cache.taskCards = document.getElementsByClassName("task-card"); //HTML Collection
+
+    //New Project dialog
+    cache.newProjectDialog = document.getElementById("new-project-dialog");
+    cache.newProjectTitle = document.getElementById("project-title");
+    cache.newProjectSubmitButton = document.getElementById("submit");
+
+    //Rename Project dialog
+    cache.renameProjectDialog = document.getElementById("change-project-name-dialog");
+    cache.renameProjectTitle = document.getElementById("new-project-title");
+    cache.renameProjectSubmitButton = document.getElementById("new-project-title-submit");
+
+    //Expanded task card dialog
+    cache.expandedTaskCard = document.getElementById("expanded-task");
     cache.taskProject = document.getElementById("task-project");
     cache.taskTitle = document.getElementById("task-title");
     cache.taskDueDate = document.getElementById("task-due-date");
@@ -26,14 +44,18 @@ function initDomCache() {
     cache.taskNotes = document.getElementById("task-notes");
     cache.taskChecklist = document.getElementById("task-checklist");
     cache.taskStatus = document.getElementById("task-status");
-    cache.sidebarTasksList = document.getElementsByClassName("task");
-    cache.taskSubmit = document.getElementById("task-submit"); 
-    cache.taskEdit = document.getElementById("task-edit");
-    cache.addSubtask = document.getElementById("task-subtask");
+    cache.taskSubmitButton = document.getElementById("task-submit"); 
+    cache.taskEditButton = document.getElementById("task-edit");
+    cache.addSubtaskButton = document.getElementById("task-subtask");
+    cache.closeExpandedTaskCard = document.getElementById("close");
+
+    //New Subtask dialog
     cache.subtaskDialog = document.getElementById("subtask");
-    cache.newSubtaskTitle = document.getElementById("new-subtask");
-    cache.subtaskSubmit = document.getElementById("submit-subtask");
-    cache.completeButtons = document.getElementsByClassName("complete-task");
+    cache.subtaskTitle = document.getElementById("new-subtask");
+    cache.subtaskSubmitButton = document.getElementById("submit-subtask");
+
+    //Task complete button
+    cache.completeTaskButtons = document.getElementsByClassName("complete-task"); //HTML Collectiom
 };
 
 function getCache() {

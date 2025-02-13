@@ -36,15 +36,24 @@
             <div id="main"></div>
             <div id="today">
                 <div>Due Today</div>
-                <div id="todays-tasks"></div>
+                <div id="todays-tasks-wrapper">
+                    <div id="todays-tasks"></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <dialog id="dialog">
+    <dialog id="new-project-dialog">
+        <form method="dialog">
+            <label>Project Title: <input type="text" id="project-title"></label>
+            <button id="submit">Submit</button>
+        </form>
+    </dialog>
+
+    <dialog id="change-project-name-dialog">
         <form method="dialog">
             <label>Project Title: <input type="text" id="new-project-title"></label>
-            <button id="submit">Submit</button>
+            <button id="new-project-title-submit">Submit</button>
         </form>
     </dialog>
 
@@ -68,7 +77,7 @@
                 </label>
                 <label>Notes: <textarea id="task-notes" disabled></textarea></label>
                 <fieldset id="task-checklist" readonly>
-                    <legend>Checklist</legend>
+                    <legend>Subtasks</legend>
                 </fieldset>
                 <label>Status: <input type="text" id="task-status" readonly></label>
                 <div id="task-buttons">
@@ -78,16 +87,16 @@
                 </div>
             </div>
         </form>
-        <dialog id="subtask">
-            <form method="dialog">
-                <label>Subtask: <input type="text" id="new-subtask"></label>
-                <button id="submit-subtask">Submit</button>
-            </form>
-        </dialog>
+
 
     </dialog>
 
-
+    <dialog id="subtask">
+        <form method="dialog">
+            <label>Subtask: <input type="text" id="new-subtask"></label>
+            <button id="submit-subtask">Submit</button>
+        </form>
+    </dialog>
 
 </body>
 </html>

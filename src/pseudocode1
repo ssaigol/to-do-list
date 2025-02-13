@@ -45,10 +45,10 @@
     //Global variables:
         //projects array => working directory of all projects and tasks within them
 
-    //Create Project function => creates new Project (imp from Projects module) instance, and appends to projects array (global variable)
+    //Create Project function => creates new Project (imp from Projects module) instance, and pushes to projects array (global variable)
         //arguments: Title (required for constructor)
 
-    //Create Task function => creates new Task (imp from Task module) instance, and appends to appropriate project instance in projects array
+    //Create Task function => creates new Task (imp from Task module) instance, and pushes to appropriate project instance in projects array
         //arguments: 
             //Title (req for constructor)
             //Due date (req for constructor), 
@@ -221,6 +221,8 @@
 
         //howManyDays() => calculate how many days between TODAY and due date
 
+        //populate task card
+
 
 
 
@@ -235,24 +237,24 @@
 
 
 
-        class Task {
-            constructor(title, duedate, description = '', priority = '', notes = '') {
-                this.title = title;
-                this.duedate = duedate;
-                this.description = description;
-                this.priority = priority;
-                this.notes = notes;
-            }
-        }
+        // class Task {
+        //     constructor(title, duedate, description = '', priority = '', notes = '') {
+        //         this.title = title;
+        //         this.duedate = duedate;
+        //         this.description = description;
+        //         this.priority = priority;
+        //         this.notes = notes;
+        //     }
+        // }
         
-        function createTask(title, duedate, description = '', priority = '', notes = '') {
-            // Only pass non-empty values to the Task constructor
-            return new Task(
-                title,
-                duedate,
-                description,
-                priority,
-                notes
-            );
-        }
+        // function createTask(title, duedate, description = '', priority = '', notes = '') {
+        //     // Only pass non-empty values to the Task constructor
+        //     return new Task(
+        //         title,
+        //         duedate,
+        //         description,
+        //         priority,
+        //         notes
+        //     );
+        // }
         
