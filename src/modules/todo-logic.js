@@ -3,8 +3,13 @@ import Project from "./project.js";
 import Task from "./task.js";
 
 const projects = [];
-projects.push(new Project("Misc"));
-populateStorage();
+const stored = getStoredProjects();
+if (stored && stored.length > 0) {
+    projects = rehydrateStoredProjects(stored);
+} else {
+    projects.push(new Project("Misc"));
+    populateStorage();
+};
 
 //Manipulate the actual projects array
 function createProject(title) {
