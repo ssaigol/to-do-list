@@ -81,3 +81,33 @@ body {
     border: 1px solid black;
 }
 
+@media (max-width: 768px) {
+    #page-container {
+        grid-template-columns: 1fr; /* Stack sidebar and main content */
+        grid-template-rows: 100px 1fr;
+        grid-template-areas:
+            "header"
+            "main";
+    }
+
+    #sidebar {
+        display: none; /* Hide sidebar on mobile */
+    }
+
+    #header {
+        padding-left: 10px;
+    }
+
+    #main-container {
+        grid-template-rows: auto 1fr; /* Adjust heights for mobile */
+    }
+
+    /* Ensure elements like buttons and text inside the header are smaller on mobile */
+    #header button {
+        font-size: 1rem;
+    }
+
+    #current-project {
+        font-size: 1rem;
+    }
+}
