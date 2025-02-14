@@ -16,7 +16,8 @@ function initDomCache() {
 
     //Today's Tasks elements
     cache.todaysTasksList = document.getElementById("todays-tasks");
-    cache.todaysTasks = document.getElementsByClassName("today"); //HTML Collection ==> can be combined with sidebar tasks?
+    cache.todaysTasks = document.getElementsByClassName("today"); //HTML Collection 
+    cache.todaysTasksDescriptions = document.getElementsByClassName("description"); //HTML Collection
 
     //Main container elements
     cache.mainContainer = document.getElementById("main"); 

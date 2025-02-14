@@ -1,8 +1,10 @@
-import {  } from "date-fns/locale";
+// import { format } from "date-fns";
 import Project from "./project.js";
 import Task from "./task.js";
 
-const projects = [];
+
+// Projects array is stored in memory and rehydrated from localStorage
+let projects = [];
 const stored = getStoredProjects();
 if (stored && stored.length > 0) {
     projects = rehydrateStoredProjects(stored);
@@ -11,28 +13,60 @@ if (stored && stored.length > 0) {
     populateStorage();
 };
 
+
+// projects.push(new Project("Misc"));
+// populateStorage();
+
+//-------------------------------------
 //Manipulate the actual projects array
+//-------------------------------------
+
 function createProject(title) {
-    projects.push(new Project(title));
+    const project = new Project(title);
+    projects.push(project);
     populateStorage();
+    return project;
 };
 
 function createTask(projectID, title, dueDate, description, priority, notes) {
     const project = projects.find(project => project.id === projectID);
-    const projectTitle = project.title;
     if (!project) return;
-    const newTask = new Task(title, projectTitle, projectID, dueDate, description, priority, notes);
+    const projectTitle = project.title; //for display purposes
+    let taskTitle = title;
+    if (title.trim() == "") {
+        taskTitle = "Task"
+    };
+    const newTask = new Task(taskTitle, projectTitle, projectID, dueDate, description, priority, notes);
     project.addTask(newTask);
     populateStorage();
 }
 
 function changeProjectTitle(projectID, newTitle) {
-    projects.find(project => project.id === projectID).title = newTitle;
-    populateStorage();
+    const project = projects.find(project => project.id === projectID);
+    if (project) {
+        project.title = newTitle;
+        project.tasks.forEach(task => {
+            task.project = newTitle;
+        });
+        populateStorage();
+    }
 }
+
+
+//---------------------------------
+//editTask IIFE (for editing tasks)
+//---------------------------------
 
 const editTask = (function() {
 
+    function findTask(taskID) {
+        for (let i = 0; i < projects.length; i++) {
+            const project = projects[i];
+            const foundTask = project.tasks.find(task => task.id === taskID);
+            if (foundTask) return foundTask;
+        }
+        return null;
+    };
 
     function edit(taskID, newTitle, newDueDate, newDescription, newPriority, newNotes) {
         const taskToEdit = findTask(taskID);
@@ -46,8 +80,11 @@ const editTask = (function() {
     };
 
     function changeTaskStatus(taskID) {
-        findTask(taskID)?.changeStatus();
-        populateStorage();
+        const task = findTask(taskID);
+        if (task) {
+            task.changeStatus();
+            populateStorage();
+        }
     };
 
     function addTaskSubtask(taskID, subtask) {
@@ -55,78 +92,25 @@ const editTask = (function() {
         if (task) {
             task.addSubtask(subtask);
             populateStorage();
-        }
-
+        };
     };
 
     function changeTaskSubtaskStatus(taskID, subtask) {
-        findTask(taskID)?.changeSubtaskStatus(subtask);
-        populateStorage();
+        const task = findTask(taskID);
+        if (task) {
+            task.changeSubtaskStatus(subtask);
+            populateStorage();
+        };
     };
 
     
     return { edit, changeTaskStatus, addTaskSubtask, changeTaskSubtaskStatus }
 })();
 
-function findTask(taskID) {
-    projects.forEach(project => {
-        project.tasks.forEach(task => {
-            if (task.id === taskID) {
-                return task;
-            }
-        })
-    })
 
-    // const project = projects.find(project => project.id === projectID);
-    // return project ? project.getTask(taskID) : null;
-};
-
-//Retrieve stored projects array for dom manipulation
-function getProjects() {
-    const projectsArr = getStoredProjects();
-    return projectsArr;
-}
-
-function getProjectTitle(projectID) {
-    const projects = getStoredProjects();
-    const project = projects.find(project => project.id === projectID);
-    return project ? project.title : "Unknown Project";
-}
-
-function getTasks(projectID) {
-    const projects = getStoredProjects();
-    const projectTasks = projects.find(project => project.id === projectID);
-    return projectTasks ? projectTasks.tasks : [];
-}
-
-function getTaskInfo(taskID) {
-    const task = getAllTasks().find(task => task.id === taskID);
-    return { 
-        project: task.project,
-        title: task.title, 
-        dueDate: task.dueDate, 
-        description: task.description,
-        priority: task.priority,
-        notes: task.notes,
-        checklist: task.checklist,
-        status: task.status
-    };
-}
-
-function getAllTasks() {
-    const projects = getStoredProjects();
-    const tasks = [];
-    if (projects) {
-        projects.forEach(project => {
-            (project.tasks || []).forEach(task => {
-                tasks.push(task);
-            });
-    });
-    return tasks;
-    };
-}
-
-
+//-------------------------------
+//Storage and Retrieval Functions
+//-------------------------------
 
 function populateStorage() {
     localStorage.setItem("projects", JSON.stringify(projects));
@@ -141,6 +125,7 @@ function rehydrateStoredProjects(storedProjects) {
             taskInstance._id = taskData._id;
             taskInstance._checklist = taskData._checklist;
             taskInstance.status = taskData.status;
+            Object.setPrototypeOf(taskInstance, Task.prototype);
             return taskInstance
         });
         return projectInstance;
@@ -154,6 +139,52 @@ function getStoredProjects() {
         return rehydrateStoredProjects(parsed);
     }
     return [];
+}
+
+//-------------------------------
+//Functions for DOM manipulation and UI logic
+//-------------------------------
+
+function getProjects() {
+    const projectsArr = projects;
+    return projectsArr;
+}
+
+function getProjectTitle(projectID) {
+    const project = projects.find(project => project.id === projectID);
+    return project ? project.title : "Unknown Project";
+}
+
+function getTasks(projectID) {
+    const projectTasks = projects.find(project => project.id === projectID);
+    return projectTasks ? projectTasks.tasks : [];
+}
+
+function getTaskInfo(taskID) {
+    const task = getAllTasks().find(task => task.id == taskID);
+    if (!task) return {};
+    return { 
+        project: task.project,
+        title: task.title, 
+        dueDate: task.dueDate, 
+        description: task.description,
+        priority: task.priority,
+        notes: task.notes,
+        checklist: task.checklist,
+        status: task.status
+    };
+}
+
+function getAllTasks() {
+    const tasks = [];
+    if (projects) {
+        projects.forEach(project => {
+            (project.tasks || project._tasks || []).forEach(task => {
+                tasks.push(task);
+            });
+        });
+    };
+    return tasks;
 }
 
 export { createProject, createTask, changeProjectTitle, editTask, getProjects, getProjectTitle, getTasks, getTaskInfo, getAllTasks };

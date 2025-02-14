@@ -85,20 +85,42 @@
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     border: none;
+    text-align: center;
 }
 
 .task-card:hover {
     background-color: rgb(225, 225, 188);
     cursor: pointer;
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
 }
 
 
 .task-card > div {
     flex: 1;
+    padding-top: 10%;
 }
 
 .task-card > button {
     align-self: flex-end;
+    position: absolute;
 }
 
+.complete-task {
+    background: none;
+    border: none;
+    color: darkgreen;     
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: color 0.2s ease;
+    font-weight: 500;
+}
+
+.complete-task:hover {
+    background-color: lightgreen;
+    color: white;
+    font-weight: 600;
+    text-decoration: underline;
+}
