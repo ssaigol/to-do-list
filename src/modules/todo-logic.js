@@ -4,6 +4,7 @@ import Task from "./task.js";
 
 
 // Projects array is stored in memory and rehydrated from localStorage
+//#region
 let projects = [];
 const stored = getStoredProjects();
 if (stored && stored.length > 0) {
@@ -12,15 +13,12 @@ if (stored && stored.length > 0) {
     projects.push(new Project("Miscellaneous"));
     populateStorage();
 };
-
-
-// projects.push(new Project("Misc"));
-// populateStorage();
+//#endregion
 
 //-------------------------------------
 //Manipulate the actual projects array
 //-------------------------------------
-
+//#region
 function createProject(title) {
     const project = new Project(title);
     projects.push(project);
@@ -39,7 +37,7 @@ function createTask(projectID, title, dueDate, description, priority, notes) {
     const newTask = new Task(taskTitle, projectTitle, projectID, dueDate, description, priority, notes);
     project.addTask(newTask);
     populateStorage();
-}
+};
 
 function changeProjectTitle(projectID, newTitle) {
     const project = projects.find(project => project.id === projectID);
@@ -50,13 +48,12 @@ function changeProjectTitle(projectID, newTitle) {
         });
         populateStorage();
     }
-}
-
+};
+//#endregion
 
 //---------------------------------
 //editTask IIFE (for editing tasks)
 //---------------------------------
-
 const editTask = (function() {
 
     function findTask(taskID) {
@@ -107,11 +104,10 @@ const editTask = (function() {
     return { edit, changeTaskStatus, addTaskSubtask, changeTaskSubtaskStatus }
 })();
 
-
 //-------------------------------
 //Storage and Retrieval Functions
 //-------------------------------
-
+//#region
 function populateStorage() {
     localStorage.setItem("projects", JSON.stringify(projects));
 }
@@ -140,25 +136,26 @@ function getStoredProjects() {
     }
     return [];
 }
+//#endregion
 
 //-------------------------------
 //Functions for DOM manipulation and UI logic
 //-------------------------------
-
+//#region
 function getProjects() {
     const projectsArr = projects;
     return projectsArr;
-}
+};
 
 function getProjectTitle(projectID) {
     const project = projects.find(project => project.id === projectID);
     return project ? project.title : "Unknown Project";
-}
+};
 
 function getTasks(projectID) {
     const projectTasks = projects.find(project => project.id === projectID);
     return projectTasks ? projectTasks.tasks : [];
-}
+};
 
 function getTaskInfo(taskID) {
     const task = getAllTasks().find(task => task.id == taskID);
@@ -173,7 +170,7 @@ function getTaskInfo(taskID) {
         checklist: task.checklist,
         status: task.status
     };
-}
+};
 
 function getAllTasks() {
     const tasks = [];
@@ -185,10 +182,9 @@ function getAllTasks() {
         });
     };
     return tasks;
-}
+};
+//#endregion
 
 export { createProject, createTask, changeProjectTitle, editTask, getProjects, getProjectTitle, getTasks, getTaskInfo, getAllTasks };
 
-
-//Write delete task function (using Project class delete class method)
 //Write delete project function (iterate through projects array) ==> add warning that will delete all tasks within
