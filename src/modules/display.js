@@ -2,15 +2,23 @@ import { initDomCache, getCache } from "./dom-cache.js";
 import { createProject, createTask, changeProjectTitle, editTask, getProjects, getProjectTitle, getTasks, getTaskInfo, getAllTasks } from "./todo-logic.js";
 import { format, differenceInCalendarDays } from "date-fns";
 
-//Global Variables
+//----------------
+//GLOBAL VARIABLES
+//----------------
+//#region
 let currentProject = "Home";
 let currentTask = null;
 let taskOpen = false;
 const TODAY = format(new Date(), "yyyy-MM-dd");
 initDomCache();
 const {header, homeButton, sidebarProjectsList, sidebarTasksList, sidebarTasksHeader, newProjectButton, newTaskButton, sidebarProjects, sidebarTasks, todaysTasksList, todaysTasks, todaysTasksDescriptions, mainContainer, projectCards, changeNameButtons, taskCards, newProjectDialog, newProjectTitle, newProjectSubmitButton, renameProjectDialog, renameProjectTitle, renameProjectSubmitButton, expandedTaskCard, taskProject, taskTitle, taskDueDate, taskDescription, taskPriority, taskNotes, taskChecklist, taskStatus, taskSubmitButton, taskEditButton, closeExpandedTaskCard, addSubtaskButton, subtaskDialog, subtaskTitle, subtaskSubmitButton, completeTaskButtons } = getCache();
+// #endregion
 
-//Helper Functions
+
+//---------------
+//HELPER FUNCTIONS
+//---------------
+// #region
 const populateTaskCard = (project, title, dueDate, description, priority, notes, checklist, status) => {
     taskProject.value = project;
     taskTitle.value = title;
@@ -61,6 +69,26 @@ const expandedTaskEditable = function() {
     addSubtaskButton.style.display = "none";
 }
 
+const getDueDateText = (dueDate) => {
+    const due = dueDate;
+    const diff = differenceInCalendarDays(due, TODAY);
+
+    if (diff === 0) return "Today";
+    if (diff === 1) return "Tomorrow";
+    if (diff === -1) return "Yesterday";
+    if (diff < 0) return `${Math.abs(diff)} day ago`;
+
+    return `in ${diff} days`;
+}
+
+const render = () => {
+    renderFunctions.renderAll();
+}
+// #endregion
+
+//----------------------
+//EVENT FUNCTIONS (IIFE)
+//----------------------
 const eventFunctions = (() => {
     function initListeners() {
         //Home button handler
@@ -214,17 +242,19 @@ return { initListeners, addListeners }
 
 })();
 
+//-----------------------
+//RENDER FUNCTIONS (IIFE)
+//-----------------------
 const renderFunctions = (() => {
+    //SIDEBAR
     function renderSidebar(projects) {
-        //Clear before rendering
         while (sidebarProjectsList.firstChild) {
             sidebarProjectsList.removeChild(sidebarProjectsList.firstChild);
         };
         while (sidebarTasksList.firstChild) {
             sidebarTasksList.removeChild(sidebarTasksList.firstChild);
         };
-
-        //render sidebar projects list
+        //Sidebar Projects
         projects.forEach(project => {
             const renderedProject = document.createElement("button");
             renderedProject.textContent = project.title;
@@ -232,8 +262,7 @@ const renderFunctions = (() => {
             renderedProject.dataset.projectID = project.id;
             sidebarProjectsList.append(renderedProject);
         });
-
-        // render task lists if on project page
+        //Sidebar Tasks
         if (currentProject !== "Home") {
             sidebarTasksHeader.style.visibility = "visible";
             newTaskButton.style.display = "block";
@@ -252,6 +281,7 @@ const renderFunctions = (() => {
         };
     };
 
+    //HEADER
     function renderHeader() {
         if (currentProject != "Home") {
             homeButton.textContent = "Home/";
@@ -262,12 +292,11 @@ const renderFunctions = (() => {
         }
     };
 
+    //TODAY'S TASKS
     function renderTodaysTasks(allTasks) {
-        //clear before rendering
         while (todaysTasksList.firstChild) {
             todaysTasksList.removeChild(todaysTasksList.firstChild);
         };
-        //render list of tasks with due date today
         allTasks.forEach(task => {
             if (differenceInCalendarDays(task.dueDate, TODAY) === 0 && task.status == "Incomplete") {
                 const taskDueTodayContainer = document.createElement("div");
@@ -295,6 +324,8 @@ const renderFunctions = (() => {
         });
     };
 
+
+    //HOMEPAGE
     function renderHomePage(projects) {
         projects.forEach(project => {
             const projectCard = document.createElement("div");
@@ -311,6 +342,7 @@ const renderFunctions = (() => {
         });
     };
 
+    //PROJECT PAGE
     function renderProjectPage() {
         getTasks(currentProject).forEach(task => {
             if (task.status == "Incomplete") {
@@ -331,6 +363,7 @@ const renderFunctions = (() => {
         })
     };
 
+    //RENDER MAIN (HOMEPAGE or PROJECT PAGE)
     function renderMain(projects) {
         while (mainContainer.firstChild) {
             mainContainer.removeChild(mainContainer.firstChild);
@@ -346,6 +379,7 @@ const renderFunctions = (() => {
         }
     };
 
+    //EXPANDED TASK CARD
     function renderTaskCard() {
         if (currentTask === null) {
             populateTaskCard(getProjectTitle(currentProject), "", TODAY, "", null, "", [], "Incomplete");
@@ -358,6 +392,7 @@ const renderFunctions = (() => {
         };   
     };
 
+    //RENDER ALL
     function renderAll() {
         const projects = getProjects();
         const allTasks = getAllTasks();
@@ -374,25 +409,7 @@ const renderFunctions = (() => {
 })();
 
 
-
-const render = () => {
-    renderFunctions.renderAll();
-}
-
-
 export const init = function() {
     eventFunctions.initListeners();
     render();
-}
-
-const getDueDateText = (dueDate) => {
-    const due = dueDate;
-    const diff = differenceInCalendarDays(due, TODAY);
-
-    if (diff === 0) return "Today";
-    if (diff === 1) return "Tomorrow";
-    if (diff === -1) return "Yesterday";
-    if (diff < 0) return `${Math.abs(diff)} day ago`;
-
-    return `in ${diff} days`;
 }

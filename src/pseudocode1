@@ -234,27 +234,489 @@
     //change project title dialog
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+//OLD CODE
 
-        // class Task {
-        //     constructor(title, duedate, description = '', priority = '', notes = '') {
-        //         this.title = title;
-        //         this.duedate = duedate;
-        //         this.description = description;
-        //         this.priority = priority;
-        //         this.notes = notes;
-        //     }
-        // }
-        
-        // function createTask(title, duedate, description = '', priority = '', notes = '') {
-        //     // Only pass non-empty values to the Task constructor
-        //     return new Task(
-        //         title,
-        //         duedate,
-        //         description,
-        //         priority,
-        //         notes
-        //     );
-        // }
-        
+//task.js
+// class Task {
+//     constructor(title, dueDate) {
+//         this.title = title;
+//         this.dueDate = new Date(dueDate);
+//         this.dueDate.setHours(12, 0, 0, 0);
+//         this.description = "";
+//         this.priority = 0;
+//         this.notes = "";
+//         this.checklist = [];
+//         this.status = "Incomplete";
+//     }
+// }
+
+
+//todo-logic.js
+// function createTask(projectTitle, title, dueDate, description, priority, notes) {
+//     const newTask = new Task(title, new Date(dueDate + "T00:00:00"));
+//     newTask.description = description;
+//     newTask.priority = priority;
+//     newTask.notes = notes;
+//     newTask.checklist = [];
+//     projects.forEach(project => {
+//         if (project.title == projectTitle) {
+//             project.tasks.push(newTask);
+//         };
+//     });
+//     render(projects, projectTitle);
+// };
+
+// function editTask(projectTitle, taskTitle, dueDate, description, priority, notes) {
+//     const taskToEdit = projects.find(project => project.title == projectTitle).tasks.find(task => task.title == taskTitle);
+//     taskToEdit.dueDate = dueDate;
+//     taskToEdit.description = description;
+//     taskToEdit.priority = priority;
+//     taskToEdit.notes = notes;
+// }
+
+// function addChecklistSubtask(subtask, projectTitle, taskTitle) {
+//     const taskToEdit = projects.find(project => project.title == projectTitle).tasks.find(task => task.title == taskTitle);
+//     taskToEdit.checklist.push(subtask);
+//     // render(projects, projectTitle);
+// }
+
+
+// function taskCompleted(projectTitle, taskTitle) {
+//     projects.find(project => project.title == projectTitle).tasks.find(task => task.title == taskTitle).status = "Completed";
+//     render(projects, projectTitle);
+// }
+
+// function getProjects() {
+//     const projectsArr = projects;
+//     return projectsArr;
+// }
+
+
+//display.js
+//OLD CODE
+
+// initDomCache();
+// const {sidebarProjectsList, sidebarTasksList, header, mainContainer, sidebarProjects, projectCards, newProjectButton, newProjectTitle, newProjectSubmit, dueToday, home, newProjectdialog, expandedTask, taskCards, taskTitle, taskProject, taskDueDate, taskDescription, taskPriority, taskNotes, taskChecklist, taskStatus, sidebarTasks, sidebarTasksHeader, todaysTasks, newTaskButton, taskSubmit, taskEdit, addSubtask, completeButtons, subtaskDialog, newSubtaskTitle, subtaskSubmit } = getCache();
+// const TODAY = new Date();
+
+
+// const renderSidebar = function(projects, currentProject) {
+//     //Clear sidebar projects before rendering
+//     while (sidebarProjectsList.firstChild) {
+//         sidebarProjectsList.removeChild(sidebarProjectsList.firstChild);
+//     };
+//     //Iterate through projects and render as list
+//     projects.forEach(project => {
+//         const renderedProject = document.createElement("button");
+//         renderedProject.textContent = project.title;
+//         renderedProject.classList.add("project");
+//         sidebarProjectsList.append(renderedProject);
+//     });
+//     eventListeners.projectButtons([...sidebarProjects]);
+//     //render tasks list only for selected project (empty when home selected)
+//     while (sidebarTasksList.firstChild) {
+//         sidebarTasksList.removeChild(sidebarTasksList.firstChild);
+//     };
+//     if (currentProject != "Home") {
+//         sidebarTasksHeader.style.visibility = "visible"
+//         projects.forEach(project => {
+//             if (project.title == currentProject) {
+//                 project.tasks.forEach(task => {
+//                     const renderedTask = document.createElement("button");
+//                     renderedTask.id = task.title;
+//                     renderedTask.classList.add(project.title.replace(/ /g, "-"));
+//                     renderedTask.textContent = task.title + ` (Due ${getDueDateText(task.dueDate)})`;
+//                     renderedTask.classList.add("task");
+//                     sidebarTasks.append(renderedTask);
+//                 })
+//             }
+//         });
+//         eventListeners.expandTaskCard([...sidebarTasks]);
+//     } else sidebarTasksHeader.style.visibility = "hidden";
+// };
+
+// const renderHeader = function(currentProject) {
+//     if (currentProject != "Home") {
+//         header.textContent = `/${currentProject}`;
+//     } else header.textContent = "";
+// };
+
+// const renderTasksDueToday = function(projects, today) {
+//     while (dueToday.firstChild) {
+//         dueToday.removeChild(dueToday.firstChild);
+//     };
+//     projects.forEach(project => {
+//         project.tasks.forEach(task => {
+//             if (differenceInCalendarDays(task.dueDate, today) === 0) {
+//                 const taskDueToday = document.createElement("div");
+//                 taskDueToday.textContent = task.title + ` (${project.title})`;
+//                 taskDueToday.classList.add("today", (project.title.replace(/ /g, "-")));
+//                 taskDueToday.id = task.title
+//                 dueToday.append(taskDueToday);
+//                 //Add more content to task list
+//             }
+
+//         })
+//     });
+//     eventListeners.expandTaskCard([...todaysTasks]);
+// };
+
+// const renderHomePage = function(projects) {
+//     while (mainContainer.firstChild) {
+//         mainContainer.removeChild(mainContainer.firstChild);
+//     }
+//     projects.forEach(project => {
+//         const projectCard = document.createElement("div");
+//         projectCard.textContent = project.title;
+//         projectCard.classList.add("project-card");
+//         mainContainer.append(projectCard);
+//         mainContainer.classList.remove("project-page", "home-page");
+//         mainContainer.classList.add("home-page");
+//     });
+//     eventListeners.projectButtons([...projectCards]);
+//     newTaskButton.style.display = "none";
+// }
+
+// const renderProjectPage = function(projects, currentProject) {
+//     while (mainContainer.firstChild) {
+//         mainContainer.removeChild(mainContainer.firstChild);
+//     }
+//     projects.forEach(project => {
+//         if (project.title == currentProject) {
+//             project.tasks.forEach(task => {
+//                 if (task.status == "Incomplete") {
+//                     const taskCard = document.createElement("div");
+//                     taskCard.id = task.title;
+//                     taskCard.classList.add(project.title.replace(/ /g, "-"));
+//                     const taskTitle = document.createElement("div");
+//                     const taskDueDate = document.createElement("div");
+//                     const completeTask = document.createElement("button");
+//                     completeTask.classList.add("complete-task");
+//                     completeTask.id = task.title;
+//                     completeTask.textContent = "Complete Task";
+//                     taskTitle.textContent = task.title;
+//                     taskDueDate.textContent = "Due: " + getDueDateText(task.dueDate);
+//                     taskCard.append(taskTitle, taskDueDate, completeTask);
+//                     taskCard.classList.add("task-card");
+//                     mainContainer.append(taskCard);
+//                     mainContainer.classList.remove("project-page", "home-page");
+//                     mainContainer.classList.add("project-page");
+//                     //IF DUE DATE PASSED HIGHLIGHT RED
+//                 };
+//             });
+//             newTaskButton.style.display = "block";
+//             eventListeners.newTask();
+//             eventListeners.completeTask();
+//         };
+//     });
+//     eventListeners.expandTaskCard([...taskCards]);
+
+// }
+
+// const renderMain = function(projects, currentProject) {
+//     if (currentProject == "Home") {
+//         renderHomePage(projects);
+//     } else renderProjectPage(projects, currentProject);
+//     renderHeader(currentProject);
+// }
+
+// const populateTaskCard = function(project, title, dueDate, description, priority, notes, checklist, status) {
+//     taskProject.value = project;
+//     taskTitle.value = title;
+//     taskDueDate.value = format(dueDate, "yyyy-MM-dd"); 
+//     taskDescription.value = description;
+//     taskPriority.value = priority;
+//     taskNotes.value = notes;
+//     checklist.forEach((item) => {
+//         // const checklistItem = document.createElement("input");
+//         // checklistItem.type = "checkbox";
+//         // checklistItem.id = item;
+//         const checklistItemLabel = document.createElement("label");
+//         checklistItemLabel.setAttribute("for", item);
+//         checklistItemLabel.textContent = item;
+//         taskChecklist.append(checklistItemLabel);
+//     });
+//     taskStatus.value = status;
+// }
+
+// const render = (projects, currentProject) => {
+//     renderSidebar(projects, currentProject);
+//     renderMain(projects, currentProject);
+//     renderTasksDueToday(projects, TODAY);
+// }
+
+// const eventListeners = (function() {
+
+//     const newProject = function() {
+//         //New Project Button => Open dialog
+//         newProjectButton.addEventListener("click", () => newProjectDialog.showModal());
+//         //New Project Submit => createProject
+//         newProjectSubmit.addEventListener("click", () => createProject(newProjectTitle.value));
+//         //render
+//     };
+
+//     const newTask = function() {
+//         newTaskButton.addEventListener("click", () => {
+//             const project = header.textContent.slice(1);
+//             populateTaskCard(project, "", new Date(), "", null, "", [], "Incomplete");
+//             expandedTaskEditable(true);
+//             expandedTask.showModal();
+//         });
+//         taskSubmit.addEventListener("click", () => {
+//             const projects = getProjects();
+//             const currentProj = projects.find(project => project.title == header.textContent.slice(1));
+//             console.log(currentProj);
+//             if (currentProj.tasks.some(task => task.title == taskTitle.value)) {
+//                 editTask(header.textContent.slice(1), taskTitle.value, taskDueDate.value, taskDescription.value, taskPriority.value, taskNotes.value);
+//             } else {
+//                 createTask(currentProj.title, taskTitle.value, taskDueDate.value, taskDescription.value, taskPriority.value, taskNotes.value);
+//                 //render
+//             };
+//         })
+//     }
+
+//     const newSubtask = function() {
+//         addSubtask.addEventListener("click", (e) => {
+//             e.preventDefault();
+//             subtaskDialog.showModal();
+//             subtaskSubmit.addEventListener("click", (e) => {
+//                 e.preventDefault();
+//                 const project = header.textContent.slice(1);
+//                 const task = taskTitle.value;
+//                 const subtask = newSubtaskTitle.value;
+//                 addChecklistSubtask(subtask, project, task);
+//                 subtaskDialog.close();
+//             })
+//         })
+//     }
+
+
+    
+//     const homeButton = function() {
+//         home.addEventListener("click", () => {
+//             renderMain(getProjects(), "Home");
+//             renderSidebar(getProjects(), "Home");
+//         });
+//     };
+    
+//     const projectButtons = function(collection) {
+//         collection.forEach(project => {
+//             project.addEventListener("click", (e) => {
+//                 const arr = getProjects();
+//                 const pwd = e.target.textContent;
+//                 renderMain(arr, pwd);
+//                 renderSidebar(arr, pwd);
+//             });
+//         })
+//     };
+
+//     const expandTaskCard = function(collection) {
+//         collection.forEach(card => {
+//             card.addEventListener("click", (e) => {
+//                 const taskID = e.target.id;
+//                 getProjects().forEach(project => {
+//                     if (e.target.classList.contains(project.title.replace(/ /g, "-"))) {
+//                         project.tasks.forEach(task => {
+//                             if (task.title == taskID) {
+//                                 populateTaskCard(project.title, task.title, task.dueDate, task.description, task.priority, task.notes, task.checklist, task.status);
+//                                 expandedTaskReadOnly();
+//                                 expandedTask.showModal();
+//                                 newSubtask();
+//                                 taskEdit.addEventListener("click", (e) => {
+//                                     e.preventDefault();
+//                                     expandedTaskEditable(false);
+//                                 })
+//                             }
+//                         })
+//                     }
+//                 })
+//             })
+//         })
+//     }
+
+//     const completeTask = function() {
+//         [...completeButtons].forEach(button => {
+//             button.addEventListener("click", (e) => {
+//                 taskCompleted(header.textContent.slice(1), e.target.id);
+//             })
+//         })
+//     }
+    
+//     return { newProject, homeButton, projectButtons, expandTaskCard, newTask, expandedTaskEditable, expandedTaskReadOnly, completeTask, newSubtask };
+// })();
+
+// const init = (projects, currentProject) => {
+//     eventListeners.newProject();
+//     eventListeners.homeButton();
+//     render(projects, currentProject);
+// };
+
+// export { init, render }
+
+
+//SAMPLE PROJECTS ARRAY
+// const projects = [
+//     {
+//         title: "Work",
+//         tasks: [
+//             {
+//                 title: "Finish report",
+//                 dueDate: new Date(),
+//                 description: "Description for Finish report",
+//                 priority: 2,
+//                 notes: "Notes for Finish report",
+//                 checklist: ["Subtask 1 for Finish report", "Subtask 2 for Finish report"],
+//                 status: "Incomplete"
+//             },
+//             {
+//                 title: "Attend meeting",
+//                 dueDate: new Date(2025, 1, 6),
+//                 description: "Description for Attend meeting",
+//                 priority: 1,
+//                 notes: "Notes for Attend meeting",
+//                 checklist: ["Subtask 1 for Attend meeting", "Subtask 2 for Attend meeting"],
+//                 status: "Incomplete"
+//             },
+//             {
+//                 title: "Review code",
+//                 dueDate: new Date(2025, 1, 7),
+//                 description: "Description for Review code",
+//                 priority: 3,
+//                 notes: "Notes for Review code",
+//                 checklist: ["Subtask 1 for Review code", "Subtask 2 for Review code"],
+//                 status: "Incomplete"
+//             }
+//         ]
+//     },
+//     {
+//         title: "Personal",
+//         tasks: [
+//             {
+//                 title: "Call mom",
+//                 dueDate: new Date(2025, 1, 5),
+//                 description: "Description for Call mom",
+//                 priority: 1,
+//                 notes: "Notes for Call mom",
+//                 checklist: ["Subtask 1 for Call mom", "Subtask 2 for Call mom"],
+//                 status: "Incomplete"
+//             },
+//             {
+//                 title: "Buy groceries",
+//                 dueDate: new Date(2025, 1, 6),
+//                 description: "Description for Buy groceries",
+//                 priority: 2,
+//                 notes: "Notes for Buy groceries",
+//                 checklist: ["Subtask 1 for Buy groceries", "Subtask 2 for Buy groceries"],
+//                 status: "Incomplete"
+//             }
+//         ]
+//     },
+//     {
+//         title: "Home Improvement",
+//         tasks: [
+//             {
+//                 title: "Paint living room",
+//                 dueDate: new Date(2025, 1, 10),
+//                 description: "Description for Paint living room",
+//                 priority: 3,
+//                 notes: "Notes for Paint living room",
+//                 checklist: ["Subtask 1 for Paint living room", "Subtask 2 for Paint living room"],
+//                 status: "Incomplete"
+//             },
+//             {
+//                 title: "Fix the leaky faucet",
+//                 dueDate: new Date(2025, 1, 12),
+//                 description: "Description for Fix the leaky faucet",
+//                 priority: 2,
+//                 notes: "Notes for Fix the leaky faucet",
+//                 checklist: ["Subtask 1 for Fix the leaky faucet", "Subtask 2 for Fix the leaky faucet"],
+//                 status: "Incomplete"
+//             },
+//             {
+//                 title: "Install new lights",
+//                 dueDate: new Date(2025, 1, 15),
+//                 description: "Description for Install new lights",
+//                 priority: 1,
+//                 notes: "Notes for Install new lights",
+//                 checklist: ["Subtask 1 for Install new lights", "Subtask 2 for Install new lights"],
+//                 status: "Incomplete"
+//             }
+//         ]
+//     },
+//     {
+//         title: "Shopping List",
+//         tasks: [
+//             {
+//                 title: "Buy milk",
+//                 dueDate: new Date(2025, 1, 5),
+//                 description: "Description for Buy milk",
+//                 priority: 1,
+//                 notes: "Notes for Buy milk",
+//                 checklist: ["Subtask 1 for Buy milk", "Subtask 2 for Buy milk"],
+//                 status: "Incomplete"
+//             },
+//             {
+//                 title: "Buy eggs",
+//                 dueDate: new Date(2025, 1, 6),
+//                 description: "Description for Buy eggs",
+//                 priority: 2,
+//                 notes: "Notes for Buy eggs",
+//                 checklist: ["Subtask 1 for Buy eggs", "Subtask 2 for Buy eggs"],
+//                 status: "Incomplete"
+//             },
+//             {
+//                 title: "Buy bread",
+//                 dueDate: new Date(2025, 1, 7),
+//                 description: "Description for Buy bread",
+//                 priority: 3,
+//                 notes: "Notes for Buy bread",
+//                 checklist: ["Subtask 1 for Buy bread", "Subtask 2 for Buy bread"],
+//                 status: "Incomplete"
+//             },
+//             {
+//                 title: "Buy fruits",
+//                 dueDate: new Date(2025, 1, 8),
+//                 description: "Description for Buy fruits",
+//                 priority: 1,
+//                 notes: "Notes for Buy fruits",
+//                 checklist: ["Subtask 1 for Buy fruits", "Subtask 2 for Buy fruits"],
+//                 status: "Incomplete"
+//             }
+//         ]
+//     },
+//     {
+//         title: "Health & Fitness",
+//         tasks: [
+//             {
+//                 title: "Morning workout",
+//                 dueDate: new Date(2025, 1, 5),
+//                 description: "Description for Morning workout",
+//                 priority: 2,
+//                 notes: "Notes for Morning workout",
+//                 checklist: ["Subtask 1 for Morning workout", "Subtask 2 for Morning workout"],
+//                 status: "Incomplete"
+//             },
+//             {
+//                 title: "Yoga session",
+//                 dueDate: new Date(2025, 1, 6),
+//                 description: "Description for Yoga session",
+//                 priority: 3,
+//                 notes: "Notes for Yoga session",
+//                 checklist: ["Subtask 1 for Yoga session", "Subtask 2 for Yoga session"],
+//                 status: "Incomplete"
+//             },
+//             {
+//                 title: "Healthy breakfast",
+//                 dueDate: new Date(2025, 1, 7),
+//                 description: "Description for Healthy breakfast",
+//                 priority: 1,
+//                 notes: "Notes for Healthy breakfast",
+//                 checklist: ["Subtask 1 for Healthy breakfast", "Subtask 2 for Healthy breakfast"],
+//                 status: "Incomplete"
+//             }
+//         ]
+//     }
+// ];

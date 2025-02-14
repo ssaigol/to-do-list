@@ -9,7 +9,7 @@ const stored = getStoredProjects();
 if (stored && stored.length > 0) {
     projects = rehydrateStoredProjects(stored);
 } else {
-    projects.push(new Project("Misc"));
+    projects.push(new Project("Miscellaneous"));
     populateStorage();
 };
 
