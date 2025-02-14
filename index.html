@@ -6,6 +6,97 @@
     <title>To-Do List</title>
 <script defer src="main.js"></script></head>
 <body>
-    
+    <div id="page-container">
+        <div id="header">
+            <button id="home">Home</button><div id="current-project"></div>
+        </div>
+        <div id="sidebar">
+            <div id="projects">
+                <div>Projects</div>
+                <div id="projects-list">
+ 
+                        <!-- Projects listed here, generated w/ New Project button -->
+                  
+                </div>
+            </div>
+            <div id="tasks">
+                <div id="tasks-header">Tasks</div>
+                <div id="tasks-list">
+
+                        <!-- Tasks list for current selected project -->
+
+                </div>
+            </div>
+            <div id="new-project">
+                <button id="new-project-button">New Project</button>
+                <button id="new-task-button">New Task</button>
+            </div>
+        </div>
+        <div id="main-container">
+            <div id="main"></div>
+            <div id="today">
+                <div>Due Today</div>
+                <div id="todays-tasks-wrapper">
+                    <div id="todays-tasks"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <dialog id="new-project-dialog">
+        <form method="dialog">
+            <label>Project Title: <input type="text" id="project-title"></label>
+            <button id="submit">Submit</button>
+        </form>
+    </dialog>
+
+    <dialog id="change-project-name-dialog">
+        <form method="dialog">
+            <label>Project Title: <input type="text" id="new-project-title"></label>
+            <button id="new-project-title-submit">Submit</button>
+        </form>
+    </dialog>
+
+
+    <dialog id="expanded-task">
+
+        <form method="dialog">
+            <div>
+                <button id="close">X</button>
+                <label>Project: <input type="text" id="task-project" readonly></label>
+                <label>Task: <input type="text" id="task-title" readonly></label>
+                <label>Due: <input type="date" id="task-due-date" readonly></label>
+                <label>Description: <input type="text" id="task-description" readonly></label>
+                <label for="task-priority">Priority: 
+                    <select id="task-priority" disabled>
+                        <option value="">None</option>
+                        <option value="1">!</option>
+                        <option value="2">!!</option>
+                        <option value="3">!!!</option>
+                    </select>
+                </label>
+                <label>Notes: <textarea id="task-notes" disabled></textarea></label>
+                <fieldset id="task-checklist" readonly>
+                    <legend>Subtasks</legend>
+                </fieldset>
+                <label>Status: <input type="text" id="task-status" readonly></label>
+                <div id="task-buttons">
+                    <button id="task-edit">Edit</button>
+                    <button id="task-subtask">Add Subtask</button>
+                    <button id="task-submit">Submit</button>
+                </div>
+            </div>
+        </form>
+
+
+    </dialog>
+
+    <dialog id="subtask">
+        <form method="dialog">
+            <label>Subtask: <input type="text" id="new-subtask"></label>
+            <button id="submit-subtask">Submit</button>
+        </form>
+    </dialog>
+
 </body>
 </html>
