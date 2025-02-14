@@ -67,8 +67,10 @@ body {
     overflow: hidden;
 }
 
+
 #main {
     overflow-y: auto;
+    position: relative;
 }
 
 #menu-button {
@@ -108,6 +110,7 @@ body {
         transition: left 0.3s ease-in-out;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
         z-index: 1;
+        padding-left: 15px;
     }
 
     #sidebar.open {
@@ -133,5 +136,14 @@ body {
 
     #current-project {
         font-size: 1rem;
+    }
+}
+
+@media (max-height: 400px) {
+    #today {
+        display: none;
+    }
+    #main-container {
+        grid-template-rows: 1fr; /* Adjust heights for mobile */
     }
 }

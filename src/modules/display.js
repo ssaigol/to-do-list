@@ -375,9 +375,10 @@ const renderFunctions = (() => {
 
     //RENDER MAIN (HOMEPAGE or PROJECT PAGE)
     function renderMain(projects) {
-        while (mainContainer.firstChild) {
-            mainContainer.removeChild(mainContainer.firstChild);
-        };
+        // while (mainContainer.firstChild) {
+        //     mainContainer.removeChild(mainContainer.firstChild);
+        // };
+        document.querySelectorAll("#main > div").forEach(div => div.remove());
         mainContainer.classList.remove("home-page", "project-page");
 
         if (currentProject === "Home") {
