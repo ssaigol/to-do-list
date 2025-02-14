@@ -11,7 +11,7 @@ let currentTask = null;
 let taskOpen = false;
 const TODAY = format(new Date(), "yyyy-MM-dd");
 initDomCache();
-const {header, homeButton, sidebarProjectsList, sidebarTasksList, sidebarTasksHeader, newProjectButton, newTaskButton, sidebarProjects, sidebarTasks, todaysTasksList, todaysTasks, todaysTasksDescriptions, mainContainer, projectCards, changeNameButtons, taskCards, newProjectDialog, newProjectTitle, newProjectSubmitButton, renameProjectDialog, renameProjectTitle, renameProjectSubmitButton, expandedTaskCard, taskProject, taskTitle, taskDueDate, taskDescription, taskPriority, taskNotes, taskChecklist, taskStatus, taskSubmitButton, taskEditButton, closeExpandedTaskCard, addSubtaskButton, subtaskDialog, subtaskTitle, subtaskSubmitButton, completeTaskButtons } = getCache();
+const {header, menuButton, homeButton, sidebar, sidebarProjectsList, sidebarTasksList, sidebarTasksHeader, newProjectButton, newTaskButton, sidebarProjects, sidebarTasks, todaysTasksList, todaysTasks, todaysTasksDescriptions, mainContainer, projectCards, changeNameButtons, taskCards, newProjectDialog, newProjectTitle, newProjectSubmitButton, renameProjectDialog, renameProjectTitle, renameProjectSubmitButton, expandedTaskCard, taskProject, taskTitle, taskDueDate, taskDescription, taskPriority, taskNotes, taskChecklist, taskStatus, taskSubmitButton, taskEditButton, closeExpandedTaskCard, addSubtaskButton, subtaskDialog, subtaskTitle, subtaskSubmitButton, completeTaskButtons } = getCache();
 // #endregion
 
 
@@ -92,6 +92,15 @@ const render = () => {
 //----------------------
 const eventFunctions = (() => {
     function initListeners() {
+        //Menu (for small screens)
+        menuButton.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+        });
+        document.addEventListener("click", (event) => {
+            if (!sidebar.contains(event.target) && !menuButton.contains(event.target)) {
+                sidebar.classList.remove("open");
+            }
+        });
         //Home button handler
         homeButton.addEventListener("click", () => {
             setCurrentLocation("Home", null);

@@ -71,6 +71,10 @@ body {
     overflow-y: auto;
 }
 
+#menu-button {
+    display: none;
+}
+
 
 /* FOR DEV ONLY */
 #page-container > * {
@@ -90,8 +94,24 @@ body {
             "main";
     }
 
+    #menu-button {
+        display: block;
+    }
+
     #sidebar {
-        display: none; /* Hide sidebar on mobile */
+        position: fixed;
+        left: -310px; /* Move it off-screen */
+        top: 0;
+        width: 170px;
+        height: 97vh;
+        background-color: #E2E2E2;
+        transition: left 0.3s ease-in-out;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    #sidebar.open {
+        left: 0; /* Slide in when open */
     }
 
     #header {
@@ -99,7 +119,11 @@ body {
     }
 
     #main-container {
-        grid-template-rows: 3fr 1fr; /* Adjust heights for mobile */
+        grid-template-rows: 1fr; /* Adjust heights for mobile */
+    }
+
+    #today {
+        display: none;
     }
 
     /* Ensure elements like buttons and text inside the header are smaller on mobile */

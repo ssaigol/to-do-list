@@ -20,7 +20,11 @@ if (stored && stored.length > 0) {
 //-------------------------------------
 //#region
 function createProject(title) {
-    const project = new Project(title);
+    let projectTitle = title;
+    if (title.trim() == "") {
+        projectTitle = "Project"
+    };
+    const project = new Project(projectTitle);
     projects.push(project);
     populateStorage();
     return project;

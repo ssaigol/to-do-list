@@ -4,8 +4,10 @@ function initDomCache() {
     //Header elements
     cache.header = document.getElementById("current-project"); 
     cache.homeButton = document.getElementById("home");
+    cache.menuButton = document.getElementById("menu-button");
 
     //Sidebar elements
+    cache.sidebar = document.getElementById("sidebar");
     cache.sidebarProjectsList = document.getElementById("projects-list");
     cache.sidebarTasksList = document.getElementById("tasks-list");
     cache.sidebarTasksHeader = document.getElementById("tasks-header");
