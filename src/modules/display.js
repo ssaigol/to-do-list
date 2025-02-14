@@ -67,6 +67,7 @@ const expandedTaskEditable = function() {
     taskSubmitButton.style.display = "block";
     taskEditButton.style.display = "none";
     addSubtaskButton.style.display = "none";
+    taskSubmitButton.autofocus = true;
 }
 
 const getDueDateText = (dueDate) => {
